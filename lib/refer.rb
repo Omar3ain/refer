@@ -9,14 +9,23 @@ module Refer
   autoload :HasReferrals, "refer/has_referrals"
   autoload :Model, "refer/model"
 
-  config_accessor :code_generator, default: ->(referrer) { SecureRandom.alphanumeric(8) }
-  config_accessor :cookie_length, default: 30.days
-  config_accessor :cookie_name, default: :refer_code
-  config_accessor :param_name, default: :ref
-  config_accessor :overwrite_cookie, default: true
-  config_accessor :track_visits, default: true
-  config_accessor :mask_ips, default: true
-  config_accessor :referral_completed
+  mattr_accessor :code_generator
+  mattr_accessor :cookie_length
+  mattr_accessor :cookie_name
+  mattr_accessor :param_name
+  mattr_accessor :overwrite_cookie
+  mattr_accessor :track_visits
+  mattr_accessor :mask_ips
+  mattr_accessor :referral_completed
+
+  # Set default values
+  self.code_generator = ->(referrer) { SecureRandom.alphanumeric(8) }
+  self.cookie_length = 30.days
+  self.cookie_name = :refer_code
+  self.param_name = :ref
+  self.overwrite_cookie = true
+  self.track_visits = true
+  self.mask_ips = true
 
   class Error < StandardError; end
   class AlreadyReferred < Error; end
